@@ -1,0 +1,17 @@
+http://127.0.0.1:8000/api/create-user
+{
+    "fName": "Admij",
+    "lName":"User",
+    "username":"sample",
+    "password":"sample123",
+    "role" : "teacher",
+    "image":null
+}
+
+http://127.0.0.1:8000/api/login
+{
+    "username":"sample",
+    "password":"sample123"
+}
+
+http://127.0.0.1:8000/api/logout
