@@ -38,7 +38,8 @@ class UserController extends Controller
                 'message' => 'Login Successful',
                 'token_type' => 'Bearer',
                 'token' => $token,
-                'role' => $user->role
+                'role' => $user->role,
+                'user' => $user,
             ], 200);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
