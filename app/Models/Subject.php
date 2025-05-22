@@ -28,7 +28,10 @@ class Subject extends Model
     }
     public function students()
     {
-        return $this->belongsToMany(Student::class, 'student_subjects');
+        return $this->belongsToMany(Student::class);
+    }
+    public function getStudent(){
+        return $this->level;
     }
     public function scores()
     {

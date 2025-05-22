@@ -36,7 +36,7 @@ class Student extends Model
     }
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'student_subjects');
+        return $this->belongsToMany(Subject::class);
     }
     public function filterBySubject($subjectID){
         return $this->subjects->where("id",$subjectID);
@@ -57,38 +57,38 @@ class Student extends Model
     {
         return $this->course->name;
     }
-    public function getSubjectNameAttribute()
-    {
-        return $this->subjects->pluck('name')->implode(', ');
-    }
-    public function getScoreAttribute()
-    {
-        return $this->scores->pluck('score')->implode(', ');
-    }
-    public function getExamAttribute()
-    {
-        return $this->exams->pluck('name')->implode(', ');
-    }
-    public function getStudentCountAttribute()
-    {
-        return $this->students->count();
-    }
-    public function getScoreCountAttribute()
-    {
-        return $this->scores->count();
-    }
-    public function getSubjectCountAttribute()
-    {
-        return $this->subjects->count();
-    }
-    public function getFullNameAttribute()
-    {
-        return $this->fName . ' ' . $this->lName;
-    }
+    // public function getSubjectNameAttribute()
+    // {
+    //     return $this->subjects->pluck('name')->implode(', ');
+    // }
+    // public function getScoreAttribute()
+    // {
+    //     return $this->scores->pluck('score')->implode(', ');
+    // }
+    // public function getExamAttribute()
+    // {
+    //     return $this->exams->pluck('name')->implode(', ');
+    // }
+    // public function getStudentCountAttribute()
+    // {
+    //     return $this->students->count();
+    // }
+    // public function getScoreCountAttribute()
+    // {
+    //     return $this->scores->count();
+    // }
+    // // public function getSubjectCountAttribute()
+    // // {
+    // //     return $this->subjects->count();
+    // // }
+    // public function getFullNameAttribute()
+    // {
+    //     return $this->fName . ' ' . $this->lName;
+    // }
     
-    public function getImageUrlAttribute()
-    {
-        return asset('storage/' . $this->image);
-    }
+    // public function getImageUrlAttribute()
+    // {
+    //     return asset('storage/' . $this->image);
+    // }
 
 }

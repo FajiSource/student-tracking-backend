@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\Student;
 use App\Models\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -17,27 +18,33 @@ class AttendanceController extends Controller
         $date = $request->date;
 
         $attendance = Attendance::filterBySubjectAndDate($subjectId, $date)->get();
+        $subject = Subject::all();
 
+        foreach($subject as $sub) {
+            if($sub->id == $subjectId) {
+                $subject = $sub;
+                break;
+            }
+        }
+        
         if ($attendance->isEmpty()) {
-            $subject = Subject::find($subjectId);
-
-            $students = Student::where('level_id', $subject->level_id)
-                ->where('course_id', $subject->course_id)
-                ->get();
+           
+            $students = Student::all();
 
             foreach ($students as $student) {
-                $alreadyExists = Attendance::where('student_id', $student->id)
-                    ->where('subject_id', $subjectId)
-                    ->where('date', $date)
-                    ->exists();
-                if (!$alreadyExists) {
-                    Attendance::create([
+                if($student->level_id != $subject->level_id && $student->course_id != $subject->course_id) {
+                    continue;
+                }
+                Attendance::create(
+                    [
                         'student_id' => $student->id,
                         'subject_id' => $subjectId,
-                        'date' => $date,
+                        'created_at' => $date,
+                    ],
+                    [
                         'present' => null
-                    ]);
-                }
+                    ]
+                );
             }
 
             $attendance = Attendance::filterBySubjectAndDate($subjectId, $date)->get();
