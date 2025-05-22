@@ -39,7 +39,7 @@ Route::post("/exams/add", [ExamController::class, "addExam"]);
 Route::post("/exams/add-score", [ExamController::class, "addStudentScore"]);
 Route::get("/exams/get-by-l/{level_id}", [ExamController::class, "getExamsByLevel"]);
 Route::get('/exams/scores/{examId}/{levelId}', [ExamController::class, 'getScoresByExamAndLevel']);
-
+Route::get('/exams/{examId}', [ExamController::class, 'getScoresByExam']);
 
 Route::post("/attendance/mark", [AttendanceController::class, "markAsPresent"]);
 Route::get("/attendance", [AttendanceController::class, "index"]);

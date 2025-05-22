@@ -11,7 +11,8 @@ class Score extends Model
     protected $fillable = [
         'student_id',
         'exam_id',
-        'score'
+        'score',
+        'updated_at'
     ];
     public function student()
     {
@@ -37,10 +38,7 @@ class Score extends Model
     {
         return $this->subject->name;
     }
-    public function getScoreAttribute()
-    {
-        return $this->score;
-    }
+
     public function getStudentCountAttribute()
     {
         return $this->student->count();
@@ -53,26 +51,12 @@ class Score extends Model
     {
         return $this->subject->count();
     }
-    public function getStudentScoreAttribute()
-    {
-        return $this->student->scores->pluck('score')->implode(', ');
-    }
-    public function getExamScoreAttribute()
-    {
-        return $this->exam->scores->pluck('score')->implode(', ');
-    }
-    public function getSubjectScoreAttribute()
-    {
-        return $this->subject->scores->pluck('score')->implode(', ');
-    }
-    public function getCreatedAtAttribute()
-    {
-        return $this->created_at ? $this->created_at->format('Y-m-d H:i:s') : null;
-    }
-    public function getUpdatedAtAttribute()
-    {
-        return $this->updated_at ? $this->updated_at->format('Y-m-d H:i:s') : null;
-    }
+
+    public function getUpdatedAtAttribute($value)
+{
+    return $value ? \Carbon\Carbon::parse($value)->format('Y-m-d H:i:s') : null;
+}
+
     public function getFullNameAttribute()
     {
         return $this->student->fName . ' ' . $this->student->lName;
@@ -116,22 +100,6 @@ class Score extends Model
     public function getSubjectStudentCountAttribute()
     {
         return $this->subject->students->count();
-    }
-    public function getStudentExamScoreAttribute()
-    {
-        return $this->student->exams->pluck('score')->implode(', ');
-    }
-    public function getStudentSubjectScoreAttribute()
-    {
-        return $this->student->subjects->pluck('score')->implode(', ');
-    }
-    public function getExamSubjectScoreAttribute()
-    {
-        return $this->exam->subject->scores->pluck('score')->implode(', ');
-    }
-    public function getSubjectStudentScoreAttribute()
-    {
-        return $this->subject->students->pluck('score')->implode(', ');
     }
     public function getStudentExamScoreCountAttribute()
     {
